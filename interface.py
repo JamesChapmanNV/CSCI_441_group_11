@@ -1,7 +1,13 @@
+import mysqlManager
 import customerManager
 import masseuseManager
 import appointmentManager
 import availabilityManager
+
+
+
+
+
 
 # Gather info from user to create a new customer
 customerManager.insert_customer(customerId,name,address,email,phone)
@@ -42,3 +48,5 @@ availabilityManager.get_availability(start_time)
 # to display names use
 customerManager.get_customer_name(customerId)
 masseuseManager.get_masseuse_name(masseuseId)
+
+

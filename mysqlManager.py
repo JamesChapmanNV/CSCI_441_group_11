@@ -19,7 +19,7 @@ try:
 except:
     print("connection error")
 
-    
+
 #creates db and tables, only need to run once
 """
 try:
@@ -46,6 +46,7 @@ def create_database(cursor, database):
     except mysql.connector.Error as err:
         print("Failed creating database: {}".format(err))
         exit(1)
+
 
 def create_tables(cursor):
     for name, ddl in TABLES.items():
@@ -95,4 +96,3 @@ TABLES['masseuseavailability'] = (
     " start int NOT NULL,"
     " end int NOT NULL"
     ")")
-
