@@ -19,7 +19,7 @@ try:
 except:
     print("connection error")
 
-    
+
 #creates db and tables, only need to run once
 """
 try:
@@ -96,5 +96,3 @@ TABLES['masseuseavailability'] = (
     " start int NOT NULL,"
     " end int NOT NULL"
     ")")
-
-
