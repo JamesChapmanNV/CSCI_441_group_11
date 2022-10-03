@@ -16,7 +16,7 @@ class Tree(ttk.Treeview):
                                            orient="vertical",
                                            command=self.yview)
 
-        vertical_scrollbar.grid(column=1, row=0, sticky='NS')
+        vertical_scrollbar.grid(column=2, row=0, sticky='nse')
         self.configure(yscrollcommand=vertical_scrollbar.set)
 
     def __configure_style(self):
@@ -28,7 +28,7 @@ class Tree(ttk.Treeview):
         self.__configure_vertical_scrollbar()
 
         self['show'] = 'headings'
-        self.grid(row=0, column=0, sticky='nsew')
+        self.grid(row=0, column=0, sticky='nsew', columnspan=2)
 
         # Set base style
         style = ttk.Style()
