@@ -17,7 +17,8 @@ class UserInterface(tk.Tk):
         for F in frames_classes:
             self.frames[F.__name__] = F(container=self)
 
-        self.show_frame(LoginFrame)
+        # self.show_frame(LoginFrame)
+        self.show_frame(MainFrame)
 
     def show_frame(self, page_name):
         frame_name_str = page_name.__name__ if not isinstance(page_name, str) else page_name
@@ -26,7 +27,7 @@ class UserInterface(tk.Tk):
         frame.grid(row=0, column=0, sticky="nsew")
 
         if frame_name_str == "MainFrame":
-            self.set_ui_properties(width=800, height=500, is_resizable=True)
+            self.set_ui_properties(width=900, height=600, is_resizable=True)
         elif frame_name_str == "LoginFrame":
             self.set_ui_properties(width=372, height=175, is_resizable=False)
 
