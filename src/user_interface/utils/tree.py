@@ -5,10 +5,9 @@ import tkinter.ttk as ttk
 class Tree(ttk.Treeview):
     def __init__(self, master, columns):
         self.master = master
-        super().__init__(self.master)
+        super().__init__(self.master, columns=columns)
 
         # Set column properties
-        self.configure(columns=columns)
         self.__configure_style()
 
     def __configure_vertical_scrollbar(self):
@@ -25,8 +24,9 @@ class Tree(ttk.Treeview):
         self.tag_configure("oddrow", background='white')
 
         self['show'] = 'headings'
-        self.grid(row=0, column=0, rowspan=4, sticky='nsew')
+
         self.grid_columnconfigure(0, weight=1)
+        self.grid(row=1, column=0, sticky='nsew')
 
         # Add vertical scrollbar
         self.__configure_vertical_scrollbar()
