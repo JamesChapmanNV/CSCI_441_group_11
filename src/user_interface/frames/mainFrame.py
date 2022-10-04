@@ -5,10 +5,14 @@ import tkinter as tk
 import tkinter.ttk as ttk
 import tkinter.font as tkfont
 
-from src.user_interface.utils import toolbar
 from src.user_interface.utils.tree import Tree
 
 num_sidepanel_rows = 4
+
+button_panel_width = 200
+button_panel_bg = "gray17"
+
+btn_strings = ["Appointments", "Customers", "Masseuses", "Admin"]
 
 
 class MainFrame(ttk.Frame):
@@ -30,25 +34,28 @@ class MainFrame(ttk.Frame):
     def __show_buttons(self):
 
         # Split button column vertically in half
-        button_panel_1 = tk.Frame(master=self)
-        button_panel_1.configure(background="#0e487d")
-        button_panel_1.grid_columnconfigure(1, weight=1)
-        button_panel_1.grid(row=0, column=1, sticky=tk.NSEW)
+        btn_panel = tk.Frame(master=self)
+        btn_panel.configure(background=button_panel_bg)
+        btn_panel.grid_columnconfigure(1, weight=1)
+        btn_panel.grid(row=0, column=1, rowspan=len(btn_strings), sticky=tk.NSEW)
 
-        for inx, img in enumerate(self.__get_button_resources()):
-            img_button = tk.Button(button_panel_1, image=img, borderwidth=0)
-            img_button.grid_columnconfigure(1, weight=1)
-            img_button.grid_rowconfigure(inx, weight=1)
-            img_button.grid(row=inx, column=1, padx=15, pady=15, sticky=tk.NS)
+        btn_container = tk.Frame(master=btn_panel, bg=button_panel_bg)
+        btn_container.grid_columnconfigure(0, weight=1)
+        btn_container.grid(row=0, column=0, rowspan=len(btn_strings), padx=20, pady=100)
 
-        blank_frames = []
-        for blank_inx in range(3):
-            blank_frame = tk.Frame(master=self)
-            blank_frame.configure(background="#0e487d")
-            blank_frame.grid_columnconfigure(1, weight=1)
-            blank_frame.grid_rowconfigure(1, weight=1)
-            blank_frame.grid(row=blank_inx + 1, column=1, sticky=tk.NSEW)
-            blank_frames.append(blank_frame)
+        for inx, img in enumerate(btn_strings):
+            btn = tk.Button(btn_container,
+                            text=btn_strings[inx],
+                            font="BahnschriftLight 15 bold",
+                            borderwidth=0,
+                            bg=button_panel_bg,
+                            fg="#099FFF",
+                            activebackground=button_panel_bg,
+                            activeforeground="white")
+
+            btn.grid_columnconfigure(1, weight=1)
+            btn.grid_rowconfigure(inx, weight=1)
+            btn.grid(row=inx, column=1, padx=15, pady=15, sticky=tk.W)
 
     def __show_appointments(self):
         columns = ('appt_num', 'date', 'time', 'room_num', "assigned_to", "customer")
@@ -91,10 +98,3 @@ class MainFrame(ttk.Frame):
                 col_w = tkfont.Font().measure(val)
                 if self.tree.column(columns[entry_index], width=None) < col_w:
                     self.tree.column(columns[entry_index], width=col_w)
-
-    def __get_button_resources(self):
-        self.__img_appointments = tk.PhotoImage(file="./resources/button_appointments.png")
-        self.__img_customers = tk.PhotoImage(file="./resources/button_customers.png")
-        self.__img_masseuses = tk.PhotoImage(file="./resources/button_masseuses.png")
-        self.__img_admin = tk.PhotoImage(file="./resources/button_admin.png")
-        return [self.__img_appointments, self.__img_customers, self.__img_masseuses, self.__img_admin]
