@@ -14,13 +14,7 @@ num_sidepanel_rows = 4
 class MainFrame(ttk.Frame):
     def __init__(self, container):
         super().__init__(container)
-        self.__img_appointments = tk.PhotoImage(file="./resources/button_appointments.png")
-        self.__img_customers = tk.PhotoImage(file="./resources/button_customers.png")
-        self.__img_masseuses = tk.PhotoImage(file="./resources/button_masseuses.png")
-        self.__img_admin = tk.PhotoImage(file="./resources/button_admin.png")
-
-        # Show toolbar
-        # self.__show_toolbar()
+        self.container = container
 
         # Add rows for the side panel given a total number of rows
         for rownum in range(num_sidepanel_rows):
@@ -39,55 +33,38 @@ class MainFrame(ttk.Frame):
         button_panel_1 = tk.Frame(master=self)
         button_panel_1.configure(background="#0e487d")
         button_panel_1.grid_columnconfigure(1, weight=1)
+        button_panel_1.grid(row=0, column=1, sticky=tk.NSEW)
 
-        # Create additional blank frames to fill empty space not used by active buttons.
-        button_panel_2 = tk.Frame(master=self)
-        button_panel_2.configure(background="#0e487d")
-        button_panel_2.grid_columnconfigure(1, weight=1)
-        button_panel_2.grid_rowconfigure(1, weight=1)
-
-        button_panel_3 = tk.Frame(master=self)
-        button_panel_3.configure(background="#0e487d")
-        button_panel_3.grid_columnconfigure(1, weight=1)
-        button_panel_3.grid_rowconfigure(1, weight=1)
-
-        button_panel_4 = tk.Frame(master=self)
-        button_panel_4.configure(background="#0e487d")
-        button_panel_4.grid_columnconfigure(1, weight=1)
-        button_panel_4.grid_rowconfigure(1, weight=1)
-
-        for inx, img in enumerate(
-                [self.__img_appointments, self.__img_customers, self.__img_masseuses, self.__img_admin]):
+        for inx, img in enumerate(self.__get_button_resources()):
             img_button = tk.Button(button_panel_1, image=img, borderwidth=0)
             img_button.grid_columnconfigure(1, weight=1)
             img_button.grid_rowconfigure(inx, weight=1)
             img_button.grid(row=inx, column=1, padx=15, pady=15, sticky=tk.NS)
 
-        button_panel_1.grid(row=0, column=1, sticky=tk.NSEW)
-        button_panel_2.grid(row=1, column=1, sticky=tk.NSEW)
-        button_panel_3.grid(row=2, column=1, sticky=tk.NSEW)
-        button_panel_4.grid(row=3, column=1, sticky=tk.NSEW)
-
-    def __show_toolbar(self):
-        return toolbar.Toolbar(self)
+        blank_frames = []
+        for blank_inx in range(3):
+            blank_frame = tk.Frame(master=self)
+            blank_frame.configure(background="#0e487d")
+            blank_frame.grid_columnconfigure(1, weight=1)
+            blank_frame.grid_rowconfigure(1, weight=1)
+            blank_frame.grid(row=blank_inx + 1, column=1, sticky=tk.NSEW)
+            blank_frames.append(blank_frame)
 
     def __show_appointments(self):
         columns = ('appt_num', 'date', 'time', 'room_num', "assigned_to", "customer")
         self.tree = Tree(master=self, columns=columns)
 
         for column in columns:
-            stretch = True if column == columns[-1] else False
-
             self.tree.heading(column,
                               text=column.replace("_", " ").replace("num", "#").title(),
                               anchor="w")
             self.tree.column(column,
                              width=tkfont.Font().measure(column.title()),
-                             stretch=stretch,
+                             stretch=True if column == columns[-1] else False,
                              minwidth=50,
                              anchor="w")
 
-        ####### Using this block for testing
+        # Using this block for testing
         test_num_of_appointments = 50
         tree_entries = []
         for appointment in range(test_num_of_appointments):
@@ -101,7 +78,7 @@ class MainFrame(ttk.Frame):
             customer = "Firstname, Lastname"
             entry = (f'{appt_num}', f'{date}', f'{time}', f'{room_num}', f'{assigned_to}', f'{customer}')
             tree_entries.append(entry)
-        #######
+        #
 
         for tree_index, tree_entry in enumerate(tree_entries):
 
@@ -114,3 +91,10 @@ class MainFrame(ttk.Frame):
                 col_w = tkfont.Font().measure(val)
                 if self.tree.column(columns[entry_index], width=None) < col_w:
                     self.tree.column(columns[entry_index], width=col_w)
+
+    def __get_button_resources(self):
+        self.__img_appointments = tk.PhotoImage(file="./resources/button_appointments.png")
+        self.__img_customers = tk.PhotoImage(file="./resources/button_customers.png")
+        self.__img_masseuses = tk.PhotoImage(file="./resources/button_masseuses.png")
+        self.__img_admin = tk.PhotoImage(file="./resources/button_admin.png")
+        return [self.__img_appointments, self.__img_customers, self.__img_masseuses, self.__img_admin]
