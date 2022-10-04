@@ -47,5 +47,6 @@ class UserInterface(tk.Tk):
 
 
 if __name__ == "__main__":
+
     app = UserInterface()
     app.mainloop()
