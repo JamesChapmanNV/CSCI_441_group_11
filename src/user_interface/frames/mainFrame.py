@@ -7,9 +7,6 @@ import tkinter.font as tkfont
 
 from src.user_interface.utils.tree import Tree
 
-num_sidepanel_rows = 4
-button_panel_width = 200
-
 # Frame background color
 color_dark_gray = "gray17"
 # Text font color
@@ -22,15 +19,14 @@ class MainFrame(ttk.Frame):
     def __init__(self, container):
         super().__init__(container)
         self.container = container
-
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
-        # Show appointments by default on UI construct
-        self.__show_appointment_container()
-
         self.button_panel_hidden = False
         self.__show_buttons()
+
+        # Show appointments by default on UI construct
+        self.__show_appointment_container()
 
     def __show_buttons(self):
 
@@ -59,17 +55,17 @@ class MainFrame(ttk.Frame):
 
     def __show_appointment_container(self):
 
-        sched_container = tk.Frame(master=self)
-        sched_container.grid_rowconfigure(0, weight=1)
-        sched_container.grid_rowconfigure(1, weight=25)
-        sched_container.grid_columnconfigure(0, weight=1)
-        sched_container.grid(row=0, column=0, sticky=tk.NSEW)
+        self.__sched_container = tk.Frame(master=self)
+        self.__sched_container.grid_rowconfigure(0, weight=1)
+        self.__sched_container.grid_rowconfigure(1, weight=50)
+        self.__sched_container.grid_columnconfigure(0, weight=1)
+        self.__sched_container.grid(row=0, column=0, sticky=tk.NSEW)
 
         '''
         Horizontal bar
         '''
 
-        nav_btn_container = tk.Frame(master=sched_container, bg=color_dark_gray)
+        nav_btn_container = tk.Frame(master=self.__sched_container, bg=color_dark_gray)
         nav_btn_container.grid_rowconfigure(0, weight=1)
         nav_btn_container.grid_columnconfigure(0, weight=1)
         nav_btn_container.grid(row=0, column=0, sticky=tk.NSEW)
@@ -88,9 +84,11 @@ class MainFrame(ttk.Frame):
         '''
         Appointment scheduler
         '''
+        self.__make_appointment_scheduler()
 
+    def __make_appointment_scheduler(self):
         columns = ('appt_num', 'date', 'time', 'room_num', "assigned_to", "customer")
-        tree = Tree(master=sched_container, columns=columns)
+        tree = Tree(master=self.__sched_container, columns=columns)
 
         for column in columns:
             tree.heading(column,
@@ -137,4 +135,3 @@ class MainFrame(ttk.Frame):
         else:
             self.__btn_panel.grid()
             self.button_panel_hidden = False
-        
