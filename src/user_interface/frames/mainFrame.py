@@ -8,19 +8,65 @@ import tkinter.font as tkfont
 from src.user_interface.utils import toolbar
 from src.user_interface.utils.tree import Tree
 
+num_sidepanel_rows = 4
+
 
 class MainFrame(ttk.Frame):
     def __init__(self, container):
         super().__init__(container)
-
-        # Declare expected class attributes
-        self.tree = None
+        self.__img_appointments = tk.PhotoImage(file="./resources/button_appointments.png")
+        self.__img_customers = tk.PhotoImage(file="./resources/button_customers.png")
+        self.__img_masseuses = tk.PhotoImage(file="./resources/button_masseuses.png")
+        self.__img_admin = tk.PhotoImage(file="./resources/button_admin.png")
 
         # Show toolbar
-        self.__show_toolbar()
+        # self.__show_toolbar()
+
+        # Add rows for the side panel given a total number of rows
+        for rownum in range(num_sidepanel_rows):
+            self.grid_rowconfigure(rownum, weight=1)
+
+        # Add column 0 for appointment scheduler
+        self.grid_columnconfigure(0, weight=1)
 
         # Show appointments by default on UI construct
         self.__show_appointments()
+        self.__show_buttons()
+
+    def __show_buttons(self):
+
+        # Split button column vertically in half
+        button_panel_1 = tk.Frame(master=self)
+        button_panel_1.configure(background="#0e487d")
+        button_panel_1.grid_columnconfigure(1, weight=1)
+
+        # Create additional blank frames to fill empty space not used by active buttons.
+        button_panel_2 = tk.Frame(master=self)
+        button_panel_2.configure(background="#0e487d")
+        button_panel_2.grid_columnconfigure(1, weight=1)
+        button_panel_2.grid_rowconfigure(1, weight=1)
+
+        button_panel_3 = tk.Frame(master=self)
+        button_panel_3.configure(background="#0e487d")
+        button_panel_3.grid_columnconfigure(1, weight=1)
+        button_panel_3.grid_rowconfigure(1, weight=1)
+
+        button_panel_4 = tk.Frame(master=self)
+        button_panel_4.configure(background="#0e487d")
+        button_panel_4.grid_columnconfigure(1, weight=1)
+        button_panel_4.grid_rowconfigure(1, weight=1)
+
+        for inx, img in enumerate(
+                [self.__img_appointments, self.__img_customers, self.__img_masseuses, self.__img_admin]):
+            img_button = tk.Button(button_panel_1, image=img, borderwidth=0)
+            img_button.grid_columnconfigure(1, weight=1)
+            img_button.grid_rowconfigure(inx, weight=1)
+            img_button.grid(row=inx, column=1, padx=15, pady=15, sticky=tk.NS)
+
+        button_panel_1.grid(row=0, column=1, sticky=tk.NSEW)
+        button_panel_2.grid(row=1, column=1, sticky=tk.NSEW)
+        button_panel_3.grid(row=2, column=1, sticky=tk.NSEW)
+        button_panel_4.grid(row=3, column=1, sticky=tk.NSEW)
 
     def __show_toolbar(self):
         return toolbar.Toolbar(self)
