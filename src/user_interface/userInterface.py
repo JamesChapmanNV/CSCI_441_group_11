@@ -5,6 +5,9 @@ import random
 
 from src.user_interface.utils import toolbar
 from src.user_interface.utils.tree import Tree
+from src import appointmentManager
+from src import masseuseManager
+from src import customerManager
 
 width = 800
 height = 500
@@ -47,22 +50,38 @@ class UserInterface(tk.Tk):
                              stretch=stretch,
                              minwidth=50,
                              anchor="w")
+            
 
-        ####### Using this block for testing
-        test_num_of_appointments = 50
         tree_entries = []
-        for appointment in range(test_num_of_appointments):
-            # Making a bunch of random rows to test the treeview
-            appt_num = random.randint(10000, 99999)
-            now = datetime.datetime.now()
-            date = now.strftime('%Y-%m-%d')
-            time = now.strftime('%H:%M')
-            room_num = random.randint(1, 3)
-            assigned_to = f"Masseuse {random.randint(1, 3)}"
-            customer = "Firstname, Lastname"
+        appointments = appointmentManager.get_future_booked_appointments()
+        # return to an array of all booked appointments
+        # each appointment includes [appointmentId, start_time, room, status, masseuseId, customerId]
+        for appointment in appointments:
+            appt_num = appointment[0]
+            dt = appointment[1]
+            date = dt.strftime('%Y-%m-%d')
+            time = dt.strftime('%H:%M')
+            room_num = appointment[2]
+            assigned_to = masseuseManager.get_masseuse_name(appointment[4])
+            customer = customerManager.get_customer_name(appointment[5])
             entry = (f'{appt_num}', f'{date}', f'{time}', f'{room_num}', f'{assigned_to}', f'{customer}')
             tree_entries.append(entry)
-        #######
+        
+        # ####### Using this block for testing
+        # test_num_of_appointments = 50
+        # tree_entries = []
+        # for appointment in range(test_num_of_appointments):
+        #     # Making a bunch of random rows to test the treeview
+        #     appt_num = random.randint(10000, 99999)
+        #     now = datetime.datetime.now()
+        #     date = now.strftime('%Y-%m-%d')
+        #     time = now.strftime('%H:%M')
+        #     room_num = random.randint(1, 3)
+        #     assigned_to = f"Masseuse {random.randint(1, 3)}"
+        #     customer = "Firstname, Lastname"
+        #     entry = (f'{appt_num}', f'{date}', f'{time}', f'{room_num}', f'{assigned_to}', f'{customer}')
+        #     tree_entries.append(entry)
+        # #######
 
         for tree_index, tree_entry in enumerate(tree_entries):
 

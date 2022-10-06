@@ -1,4 +1,4 @@
-import src.config as config
+from src import config
 import mysql.connector 
 from mysql.connector import errorcode
 
@@ -8,14 +8,13 @@ from mysql.connector import errorcode
 .......................................................................................
 """
 try:
-    cnx = mysql.connector.connect(
+    connection = mysql.connector.connect(
             host = config.host,
             user = config.user,
             password = config.passwd,
             database = config.db_name
             )
-    print(cnx)
-    cursor = cnx.cursor()
+    cursor = connection.cursor()
 except:
     print("connection error")
 

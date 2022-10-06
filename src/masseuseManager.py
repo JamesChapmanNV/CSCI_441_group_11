@@ -1,4 +1,4 @@
-import mysqlManager
+from src import mysqlManager
 
 
 def insert_masseuse(masseuseId,name,address,email,phone): 
@@ -28,5 +28,7 @@ def get_masseuse_name(masseuseId):
     except:
         print('error in get_masseuse Select')
     
-    name = mysqlManager.cursor
-    return name
+    name = mysqlManager.cursor.fetchone()
+    #returns an tuple ('name',)
+    #Access name string at index 0
+    return name[0]

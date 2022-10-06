@@ -1,4 +1,4 @@
-import mysqlManager
+from src import mysqlManager
 
 
 def insert_customer(customerId,name,address,email,phone): 
@@ -29,5 +29,7 @@ def get_customer_name(customerId):
     except:
         print('error in get_customer Select')
     
-    name = mysqlManager.cursor
-    return name
+    name = mysqlManager.cursor.fetchone()
+    #returns an tuple ('name',)
+    #Access name string at index 0
+    return name[0]

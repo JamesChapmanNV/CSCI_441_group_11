@@ -1,4 +1,4 @@
-import mysqlManager
+from src import mysqlManager
 
 
 def insert_availability(masseuseId,dow,start,end): 
