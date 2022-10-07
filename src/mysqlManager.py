@@ -87,6 +87,7 @@ TABLES['appointments'] = (
     ")")
 
 # Note: 1=Sunday, 2=Monday, 3=Tuesday, 4=Wednesday, 5=Thursday, 6=Friday, 7=Saturday.
+# closed on Saturday and Sunday
 TABLES['masseuseavailability'] = (
     "CREATE TABLE masseuseavailability ("
     " id int AUTO_INCREMENT PRIMARY KEY ,"
@@ -96,4 +97,9 @@ TABLES['masseuseavailability'] = (
     " end int NOT NULL"
     ")")
 
+TABLES['services'] = (
+    "CREATE TABLE services ("
+    " id int AUTO_INCREMENT PRIMARY KEY ,"
+    " name varchar(50) NOT NULL"
+    ")")
 
