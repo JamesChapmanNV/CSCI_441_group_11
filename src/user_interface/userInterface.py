@@ -16,8 +16,8 @@ class UserInterface(tk.Tk):
         for F in frames_classes:
             self.frames[F.__name__] = F(container=self)
 
-        # self.show_frame(LoginFrame)
-        self.show_frame(MainFrame)
+        self.show_frame(LoginFrame)
+        # self.show_frame(MainFrame)
 
     def show_frame(self, page_name):
         frame_name_str = page_name.__name__ if not isinstance(page_name, str) else page_name
