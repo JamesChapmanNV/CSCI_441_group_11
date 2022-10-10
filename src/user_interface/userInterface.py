@@ -1,7 +1,11 @@
-import datetime
+import os
+import sys
 import tkinter as tk
-from src.user_interface.frames.mainFrame import MainFrame
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+
 from src.user_interface.frames.loginFrame import LoginFrame
+from src.user_interface.frames.mainFrame import MainFrame
 
 frames_classes = (MainFrame, LoginFrame)
 
@@ -47,6 +51,5 @@ class UserInterface(tk.Tk):
 
 
 if __name__ == "__main__":
-
     app = UserInterface()
     app.mainloop()
