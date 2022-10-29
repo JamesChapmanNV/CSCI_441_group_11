@@ -1,11 +1,13 @@
 import os
 import sys
 import tkinter as tk
+import tkinter.ttk as ttk
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from src.user_interface.frames.loginFrame import LoginFrame
 from src.user_interface.frames.mainFrame import MainFrame
+from src.user_interface.frames.manageAppointmentFrame import ManageApptFrame
 
 frames_classes = (MainFrame, LoginFrame)
 
@@ -16,6 +18,8 @@ class UserInterface(tk.Tk):
 
         # Set window title
         self.wm_title("Carpe Diem Massage Company")
+
+        self.__popup = None
 
         self.frames = {}
         for F in frames_classes:
@@ -30,12 +34,27 @@ class UserInterface(tk.Tk):
         frame = self.frames[frame_name_str]
         frame.grid(row=0, column=0, sticky="nsew")
 
-        if frame_name_str == "MainFrame":
-            self.set_ui_properties(width=900, height=600, is_resizable=True)
+        if frame_name_str != "LoginFrame":
+            self.__popup = tk.Menu(self, tearoff=0)
+            self.__popup.add_command(label="Add Appointment", command=self.show_manage_appt_frame)
+
+            if frame_name_str == "MainFrame":
+                self.set_ui_properties(width=900, height=600, is_resizable=True)
+
+            self.bind("<Button-3>", self.show_popup_menu)
         elif frame_name_str == "LoginFrame":
             self.set_ui_properties(width=372, height=175, is_resizable=False)
 
         frame.tkraise()
+
+    def show_popup_menu(self, event):
+        try:
+            self.__popup.tk_popup(event.x_root, event.y_root, 0)
+        finally:
+            self.__popup.grab_release()
+
+    def show_manage_appt_frame(self):
+        ManageApptFrame(self)
 
     def set_ui_properties(self, width, height, is_resizable):
         # Piece of code to center the window on the screen when it starts up
