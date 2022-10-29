@@ -7,6 +7,7 @@ class ManageApptFrame(tk.Toplevel):
         self.container = container
 
         self.__show_inner_frame()
+        self.wm_title("Manage Appointment")
 
     def __show_inner_frame(self):
         f = ('Times', 14)
