@@ -6,7 +6,7 @@ from src.user_interface.utils.tree import Tree
 from src import appointmentManager
 from src import masseuseManager
 from src import customerManager
-from user_interface.frames.manageAppointmentFrame import ManageApptFrame
+from src.user_interface.frames.manageAppointmentFrame import ManageApptFrame
 
 # Frame background color
 color_dark_gray = "gray17"
