@@ -64,8 +64,8 @@ class ManageApptFrame(tk.Toplevel):
 
     def my_callback(self, var, index, mode):
         print("Traced variable {}".format(self.__date_var.get()))
-        if self.__date_var.get() != "10/30/22":
-            self.__time_var.set("Test")
+        '''if self.__date_var.get() != "10/30/22":
+            self.__time_var.set("Test")'''
 
     def get_times(self):
         times = []

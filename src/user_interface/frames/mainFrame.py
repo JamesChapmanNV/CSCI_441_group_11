@@ -6,6 +6,7 @@ from src.user_interface.utils.tree import Tree
 from src import appointmentManager
 from src import masseuseManager
 from src import customerManager
+from user_interface.frames.manageAppointmentFrame import ManageApptFrame
 
 # Frame background color
 color_dark_gray = "gray17"
@@ -53,6 +54,28 @@ class MainFrame(ttk.Frame):
             btn.grid_rowconfigure(inx, weight=1)
             btn.grid(row=inx, column=1, padx=15, pady=15, sticky=tk.W)
 
+        '''
+            Add appointment button
+        '''
+        action_btn_container = tk.Frame(master=self.__btn_panel, bg=color_dark_gray)
+        action_btn_container.grid(row=1, column=0, padx=20, pady=20)
+        add_appt = tk.Button(action_btn_container,
+                             text="Add Appointment",
+                             font="BahnschriftLight 15 bold",
+                             borderwidth=0,
+                             bg=color_dark_gray,
+                             fg="white",
+                             activebackground=color_dark_gray,
+                             activeforeground="white",
+                             command=self.__show_manage_appt_frame)
+
+        add_appt.grid_columnconfigure(1, weight=1)
+        add_appt.grid_rowconfigure(0, weight=1)
+        add_appt.grid(row=0, column=1, padx=15, pady=15, sticky=tk.W)
+
+    def __show_manage_appt_frame(self):
+        ManageApptFrame(container=self.container)
+
     def __show_appointment_container(self):
 
         self.__sched_container = tk.Frame(master=self)
@@ -64,7 +87,6 @@ class MainFrame(ttk.Frame):
         '''
         Horizontal bar
         '''
-
         nav_btn_container = tk.Frame(master=self.__sched_container, bg=color_dark_gray)
         nav_btn_container.grid_rowconfigure(0, weight=1)
         nav_btn_container.grid_columnconfigure(0, weight=1)
