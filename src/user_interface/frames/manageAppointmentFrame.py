@@ -114,7 +114,8 @@ class ManageApptFrame(tk.Toplevel):
         for time in times_dict:
             if(times_dict[time] < 3):
                 times.append(time)
-                
+        
+        print(times)
         return times
         
        
