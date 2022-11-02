@@ -51,7 +51,8 @@ class ManageApptFrame(tk.Toplevel):
                                 text='Save',
                                 font=f,
                                 relief=tk.SOLID,
-                                cursor='hand2')
+                                cursor='hand2',
+                                command=self.__save_appointment)
 
         self.date_input.grid(row=0, column=1, pady=10, padx=20)
         self.time_input.grid(row=1, column=1, pady=10, padx=20)
@@ -61,6 +62,9 @@ class ManageApptFrame(tk.Toplevel):
         # self.date_input.bind("<<CalendarSelected>>", lambda: print(self.date_input.selection_get()))
 
         self.__inner_frame.pack()
+
+    def __save_appointment(self):
+        print(self.__date_var.get(), self.__time_var.get(), self.__masseuse_var.get())
 
     def my_callback(self, var, index, mode):
         print("Traced variable {}".format(self.__date_var.get()))
