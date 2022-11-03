@@ -165,6 +165,11 @@ class MainFrame(ttk.Frame):
                 if self.tree_view.column(columns[entry_index], width=None) < col_w:
                     self.tree_view.column(columns[entry_index], width=col_w)
 
+        self.tree_view.bind('<Double-1>', self.__on_tree_double_click)
+
+    def __on_tree_double_click(self, event):
+        print(self.tree_view.item(self.tree_view.selection()[0]).values())
+
     def __toggle_menu_panel(self):
         if not self.button_panel_hidden:
             self.__btn_panel.grid_remove()
