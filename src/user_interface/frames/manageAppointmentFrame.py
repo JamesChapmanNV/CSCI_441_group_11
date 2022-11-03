@@ -1,4 +1,6 @@
 import tkinter as tk
+
+import customerManager
 from src.user_interface.utils import Appointments
 from src import appointmentManager
 from src import masseuseManager
@@ -29,11 +31,16 @@ class ManageApptFrame(tk.Toplevel):
                  text="Masseuse",
                  bg='#CCCCCC',
                  font=f).grid(row=2, column=0, pady=10)
+        tk.Label(self.__inner_frame,
+                 text="Customer",
+                 bg='#CCCCCC',
+                 font=f).grid(row=3, column=0, pady=10)
 
         # Input values
         self.__date_var = tk.StringVar()
         self.__time_var = tk.StringVar(self, value="Time")
         self.__masseuse_var = tk.StringVar(self, value="Masseuse")
+        self.__customer_var = tk.StringVar(self, value="Customer")
 
         # Set callback
         self.__date_var.trace_add('write', callback=self.my_callback)
@@ -46,9 +53,11 @@ class ManageApptFrame(tk.Toplevel):
         # current_time = tk.StringVar()
         # self.time_input = tk.OptionMenu(self.__inner_frame, self.__time_var, *self.get_times())
 
-        choices = masseuseManager.get_all_masseuse_names()
+        masseuse_choices = masseuseManager.get_all_masseuse_names()
+        self.masseuse_input = tk.OptionMenu(self.__inner_frame, self.__masseuse_var, *masseuse_choices)
 
-        self.masseuse_input = tk.OptionMenu(self.__inner_frame, self.__masseuse_var, *choices)
+        customer_choices = customerManager.get_all_customer_names()
+        self.customer_input = tk.OptionMenu(self.__inner_frame, self.__customer_var, *customer_choices)
         save_button = tk.Button(self.__inner_frame,
                                 width=15,
                                 text='Save',
@@ -60,7 +69,8 @@ class ManageApptFrame(tk.Toplevel):
         self.date_input.grid(row=0, column=1, pady=10, padx=20)
         self.time_input.grid(row=1, column=1, pady=10, padx=20)
         self.masseuse_input.grid(row=2, column=1, pady=10, padx=20)
-        save_button.grid(row=3, column=1, pady=10, padx=20)
+        self.customer_input.grid(row=3, column=1, pady=10, padx=20)
+        save_button.grid(row=4, column=1, pady=10, padx=20)
 
         # self.date_input.bind("<<CalendarSelected>>", lambda: print(self.date_input.selection_get()))
 
