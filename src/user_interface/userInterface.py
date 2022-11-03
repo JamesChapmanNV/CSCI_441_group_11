@@ -54,7 +54,7 @@ class UserInterface(tk.Tk):
             self.__popup.grab_release()
 
     def show_manage_appt_frame(self):
-        ManageApptFrame(self)
+        ManageApptFrame(self, self.frames["MainFrame"])
 
     def set_ui_properties(self, width, height, is_resizable):
         # Piece of code to center the window on the screen when it starts up

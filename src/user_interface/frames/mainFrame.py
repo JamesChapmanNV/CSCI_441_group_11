@@ -57,7 +57,7 @@ class MainFrame(ttk.Frame):
         '''
             Add appointment button
         '''
-        action_btn_container = tk.Frame(master=self.__btn_panel, bg=color_dark_gray)
+        '''action_btn_container = tk.Frame(master=self.__btn_panel, bg=color_dark_gray)
         action_btn_container.grid(row=1, column=0, padx=20, pady=20)
         add_appt = tk.Button(action_btn_container,
                              text="Add Appointment",
@@ -71,10 +71,10 @@ class MainFrame(ttk.Frame):
 
         add_appt.grid_columnconfigure(1, weight=1)
         add_appt.grid_rowconfigure(0, weight=1)
-        add_appt.grid(row=0, column=1, padx=15, pady=15, sticky=tk.W)
+        add_appt.grid(row=0, column=1, padx=15, pady=15, sticky=tk.W)'''
 
     def __show_manage_appt_frame(self):
-        ManageApptFrame(container=self.container)
+        ManageApptFrame(container=self.container, appt_tree=self.tree_view)
 
     def __show_appointment_container(self):
 
@@ -106,21 +106,21 @@ class MainFrame(ttk.Frame):
         '''
         Appointment scheduler
         '''
-        self.__make_appointment_scheduler()
+        self.make_appointment_scheduler()
 
-    def __make_appointment_scheduler(self):
+    def make_appointment_scheduler(self):
         columns = ('appt_num', 'date', 'time', 'room_num', "assigned_to", "customer")
-        tree = Tree(master=self.__sched_container, columns=columns)
+        self.tree_view = Tree(master=self.__sched_container, columns=columns)
 
         for column in columns:
-            tree.heading(column,
-                         text=column.replace("_", " ").replace("num", "#").title(),
-                         anchor="w")
-            tree.column(column,
-                        width=tkfont.Font().measure(column.title()),
-                        stretch=True if column == columns[-1] else False,
-                        minwidth=50,
-                        anchor="w")
+            self.tree_view.heading(column,
+                                   text=column.replace("_", " ").replace("num", "#").title(),
+                                   anchor="w")
+            self.tree_view.column(column,
+                                  width=tkfont.Font().measure(column.title()),
+                                  stretch=True if column == columns[-1] else False,
+                                  minwidth=50,
+                                  anchor="w")
 
         tree_entries = []
         appointments = appointmentManager.get_future_booked_appointments()
@@ -157,13 +157,13 @@ class MainFrame(ttk.Frame):
 
             # Apply style tag based on whether the index of the entry is even or odd
             style_tag = 'evenrow' if tree_index % 2 == 0 else 'oddrow'
-            tree.insert('', tk.END, values=tree_entry, tags=(style_tag,))
+            self.tree_view.insert('', tk.END, values=tree_entry, tags=(style_tag,))
 
             # Dynamically set column width if a value entered extends the bounds of current width
             for entry_index, val in enumerate(tree_entry):
                 col_w = tkfont.Font().measure(val)
-                if tree.column(columns[entry_index], width=None) < col_w:
-                    tree.column(columns[entry_index], width=col_w)
+                if self.tree_view.column(columns[entry_index], width=None) < col_w:
+                    self.tree_view.column(columns[entry_index], width=col_w)
 
     def __toggle_menu_panel(self):
         if not self.button_panel_hidden:

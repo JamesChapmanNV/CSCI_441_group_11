@@ -8,9 +8,10 @@ from datetime import datetime, timedelta
 
 
 class ManageApptFrame(tk.Toplevel):
-    def __init__(self, container):
+    def __init__(self, container, main_frame):
         super().__init__()
         self.container = container
+        self.main_frame = main_frame
 
         self.__show_inner_frame()
         self.wm_title("Manage Appointment")
@@ -81,6 +82,7 @@ class ManageApptFrame(tk.Toplevel):
         time1 = datetime.strptime(self.__time_var.get(), '%I:%M %p').strftime('%H')
         dt = datetime.strptime(self.__date_var.get(),'%m/%d/%y') + timedelta(hours = int(time1))
         appointmentManager.insert_appointment(f'{dt}', 1, 'BOOKED', 61789, 10325)
+        self.main_frame.make_appointment_scheduler()
 
     def my_callback(self, var, index, mode):
         print("Traced variable {}".format(self.__date_var.get()))
