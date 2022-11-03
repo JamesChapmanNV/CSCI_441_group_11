@@ -1,6 +1,7 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 import tkinter.font as tkfont
+from datetime import datetime
 
 from src.user_interface.utils.tree import Tree
 from src import appointmentManager
@@ -168,7 +169,13 @@ class MainFrame(ttk.Frame):
         self.tree_view.bind('<Double-1>', self.__on_tree_double_click)
 
     def __on_tree_double_click(self, event):
-        print(self.tree_view.item(self.tree_view.selection()[0]).values())
+        selected_values = list(self.tree_view.item(self.tree_view.selection()[0]).values())[2]
+        print(selected_values)
+        update_appt_frame = ManageApptFrame(container=self.container, main_frame=self)
+        update_appt_frame.update_appointment(date=datetime.strptime(selected_values[1], '%Y-%m-%d').strftime('%m/%d/%y'),
+                                             time=selected_values[2],
+                                             masseuse=selected_values[3],
+                                             customer=selected_values[4])
 
     def __toggle_menu_panel(self):
         if not self.button_panel_hidden:

@@ -77,6 +77,12 @@ class ManageApptFrame(tk.Toplevel):
 
         self.__inner_frame.pack()
 
+    def update_appointment(self, date, time, masseuse, customer):
+        self.__date_var.set(date)
+        self.__time_var.set(time)
+        self.__masseuse_var.set(masseuse)
+        self.__customer_var.set(customer)
+
     def __save_appointment(self):
         print(self.__date_var.get(), self.__time_var.get(), self.__masseuse_var.get())
         time1 = datetime.strptime(self.__time_var.get(), '%I:%M %p').strftime('%H')
