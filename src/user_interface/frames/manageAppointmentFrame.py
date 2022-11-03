@@ -2,7 +2,8 @@ import tkinter as tk
 from src.user_interface.utils import Appointments
 from src import appointmentManager
 from src import masseuseManager
-from datetime import datetime
+from datetime import datetime, timedelta
+
 
 class ManageApptFrame(tk.Toplevel):
     def __init__(self, container):
@@ -43,7 +44,7 @@ class ManageApptFrame(tk.Toplevel):
         # self.time_input = tk.Entry(self.__inner_frame, font=f)
 
         # current_time = tk.StringVar()
-        #self.time_input = tk.OptionMenu(self.__inner_frame, self.__time_var, *self.get_times())
+        # self.time_input = tk.OptionMenu(self.__inner_frame, self.__time_var, *self.get_times())
 
         choices = masseuseManager.get_all_masseuse_names()
 
@@ -67,6 +68,9 @@ class ManageApptFrame(tk.Toplevel):
 
     def __save_appointment(self):
         print(self.__date_var.get(), self.__time_var.get(), self.__masseuse_var.get())
+        time1 = datetime.strptime(self.__time_var.get(), '%I:%M %p').strftime('%H')
+        dt = datetime.strptime(self.__date_var.get(),'%m/%d/%y') + timedelta(hours = int(time1))
+        appointmentManager.insert_appointment(f'{dt}', 1, 'BOOKED', 61789, 10325)
 
     def my_callback(self, var, index, mode):
         print("Traced variable {}".format(self.__date_var.get()))
@@ -77,45 +81,44 @@ class ManageApptFrame(tk.Toplevel):
 
     def get_times(self):
         seletedDate = self.__date_var.get()
-        if(seletedDate == '11/6/22'):
-            return [1,2,3]
-        if(seletedDate == ''):
+        if (seletedDate == '11/6/22'):
+            return [1, 2, 3]
+        if (seletedDate == ''):
             return [
-                '9:00 AM', 
-                '10:00 AM', 
-                '11:00 AM', 
-                '12:00 PM', 
-                '1:00 PM', 
-                '2:00 PM', 
-                '3:00 PM', 
+                '9:00 AM',
+                '10:00 AM',
+                '11:00 AM',
+                '12:00 PM',
+                '1:00 PM',
+                '2:00 PM',
+                '3:00 PM',
                 '4:00 PM']
-        
+
         times = []
         times_dict = {
-            '9:00 AM' : 0, 
-            '10:00 AM' : 0, 
-            '11:00 AM' : 0, 
-            '12:00 PM' : 0, 
-            '1:00 PM' : 0, 
-            '2:00 PM' : 0, 
-            '3:00 PM' : 0, 
-            '4:00 PM' : 0 } 
-        
-        appointments = appointmentManager.get_appointments(datetime.strptime(seletedDate,'%m/%d/%y').strftime("%Y-%m-%d"))
+            '9:00 AM': 0,
+            '10:00 AM': 0,
+            '11:00 AM': 0,
+            '12:00 PM': 0,
+            '1:00 PM': 0,
+            '2:00 PM': 0,
+            '3:00 PM': 0,
+            '4:00 PM': 0}
+
+        appointments = appointmentManager.get_appointments(
+            datetime.strptime(seletedDate, '%m/%d/%y').strftime("%Y-%m-%d"))
         # each appointment includes [appointmentId, start_time, room, status, masseuseId, customerId]
-        
+
         for appointment in appointments:
             dt = appointment[1]
             time = dt.strftime("%#I:%M %p")
-            times_dict[time] = times_dict[time]+1
-            
+            times_dict[time] = times_dict[time] + 1
+
         # count number of appointments at that time scheduled
         # because there are 3 rooms, if <3, there is an appointment available
         for time in times_dict:
-            if(times_dict[time] < 3):
+            if (times_dict[time] < 3):
                 times.append(time)
-        
+
         print(times)
         return times
-        
-       
