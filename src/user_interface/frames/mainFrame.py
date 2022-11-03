@@ -57,7 +57,7 @@ class MainFrame(ttk.Frame):
         '''
             Add appointment button
         '''
-        '''action_btn_container = tk.Frame(master=self.__btn_panel, bg=color_dark_gray)
+        action_btn_container = tk.Frame(master=self.__btn_panel, bg=color_dark_gray)
         action_btn_container.grid(row=1, column=0, padx=20, pady=20)
         add_appt = tk.Button(action_btn_container,
                              text="Add Appointment",
@@ -71,10 +71,10 @@ class MainFrame(ttk.Frame):
 
         add_appt.grid_columnconfigure(1, weight=1)
         add_appt.grid_rowconfigure(0, weight=1)
-        add_appt.grid(row=0, column=1, padx=15, pady=15, sticky=tk.W)'''
+        add_appt.grid(row=0, column=1, padx=15, pady=15, sticky=tk.W)
 
     def __show_manage_appt_frame(self):
-        ManageApptFrame(container=self.container, appt_tree=self.tree_view)
+        ManageApptFrame(container=self.container, main_frame=self)
 
     def __show_appointment_container(self):
 
