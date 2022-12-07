@@ -33,3 +33,17 @@ def get_customer_name(customerId):
     #returns an tuple ('name',)
     #Access name string at index 0
     return name[0]
+
+
+def get_all_customer_names():
+    try:
+        command = ("SELECT distinct name FROM customers")
+        mysqlManager.cursor.execute(command)
+    except:
+        print('error in get_all_customer_names ')
+
+    names = []  # = mysqlManager.cursor.fetchall()
+    for customers in mysqlManager.cursor:
+        names.append(customers[0])
+
+    return names

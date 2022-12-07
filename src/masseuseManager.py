@@ -32,3 +32,16 @@ def get_masseuse_name(masseuseId):
     #returns an tuple ('name',)
     #Access name string at index 0
     return name[0]
+
+def get_all_masseuse_names(): 
+    try:
+        command = ("SELECT distinct name FROM masseuses")
+        mysqlManager.cursor.execute(command)
+    except:
+        print('error in get_all_masseuse_names ')
+    
+    names = [] #= mysqlManager.cursor.fetchall()
+    for masseuse in mysqlManager.cursor:
+        names.append(masseuse[0])
+
+    return names
