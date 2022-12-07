@@ -51,13 +51,11 @@ class ManageApptFrame(tk.Toplevel):
 
         # Get appointmentID if available
 
-
         # Input values
         self.__date_var = tk.StringVar()
         self.__time_var = tk.StringVar(self, value="Time")
         self.__masseuse_var = tk.StringVar(self, value="Masseuse")
         self.__customer_var = tk.StringVar(self, value="Customer")
-
         # Set callback
         self.__date_var.trace_add('write', callback=self.my_callback)
 
@@ -68,9 +66,10 @@ class ManageApptFrame(tk.Toplevel):
         This is probably not necessary. Trying to figure out how to update appointmentID correctly.
         '''
 
+        # rooms numbers for ui
         rooms = ["1", "2", "3", "4", ]
-        room_select = tk.StringVar()
-        room_select.set(rooms[0])
+        self.__room_select = tk.StringVar(self, value="Room #")
+        self.__room_select.set(rooms[1])
 
         # self.time_input = tk.Entry(self.__inner_frame, font=f)
 
@@ -82,7 +81,10 @@ class ManageApptFrame(tk.Toplevel):
 
         customer_choices = customerManager.get_all_customer_names()
         self.customer_input = tk.OptionMenu(self.__inner_frame, self.__customer_var, *customer_choices)
-        self.room_num = tk.OptionMenu(self.__inner_frame, room_select, *rooms)
+
+        # room number selection
+        self.room_num = tk.OptionMenu(self.__inner_frame, self.__room_select, *rooms)
+
         save_button = tk.Button(self.__inner_frame,
                                 width=15,
                                 text='Save',
@@ -123,13 +125,12 @@ class ManageApptFrame(tk.Toplevel):
         print(self.__date_var.get(), self.__time_var.get(), self.__masseuse_var.get())
         time1 = datetime.strptime(self.__time_var.get(), '%I:%M %p').strftime('%H')
         dt = datetime.strptime(self.__date_var.get(), '%m/%d/%y') + timedelta(hours=int(time1))
-        appointmentManager.insert_appointment(f'{dt}', 1, 'BOOKED', 61789, 10325)
+        appointmentManager.insert_appointment(f'{dt}', self.room_num, 'BOOKED', 61789, 10325)
         self.main_frame.make_appointment_scheduler()
 
     def __delete_appointment(self):
-        appointmentManager.delete_appointment(902)
+        appointmentManager.delete_appointment(915)
         self.main_frame.make_appointment_scheduler()
-
 
     def my_callback(self, var, index, mode):
         print("Traced variable {}".format(self.__date_var.get()))
