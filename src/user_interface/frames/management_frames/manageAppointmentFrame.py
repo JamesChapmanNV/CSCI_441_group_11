@@ -69,7 +69,7 @@ class ManageApptFrame(tk.Toplevel):
         # rooms numbers for ui
         rooms = ["1", "2", "3", "4", ]
         self.__room_select = tk.StringVar(self, value="Room #")
-        self.__room_select.set(rooms[1])
+        self.__room_select.set(rooms[0])
 
         # self.time_input = tk.Entry(self.__inner_frame, font=f)
 
