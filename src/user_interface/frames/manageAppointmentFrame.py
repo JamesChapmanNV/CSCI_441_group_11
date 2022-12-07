@@ -24,7 +24,10 @@ class ManageApptFrame(tk.Toplevel):
                  text="Appointment ID",
                  bg='#CCCCCC',
                  font=f).grid(row=0, column=0, pady=10)
-
+        tk.Label(self.__inner_frame,
+                 text="123",
+                 bg='#CCCCCC',
+                 font=f).grid(row=0, column=1, pady=10)
         tk.Label(self.__inner_frame,
                  text="Date",
                  bg='#CCCCCC',
@@ -56,7 +59,10 @@ class ManageApptFrame(tk.Toplevel):
 
         # self.date_input = tk.Entry(self.__inner_frame, textvariable=self.__date_var, font=f)
         self.date_input = Appointments.Appointments(self.__inner_frame, self.__date_var)
-
+        '''
+        self.show_id = tk.StringVar(self, value="123")
+        This is probably not necessary. Trying to figure out how to update appointmentID correctly.
+        '''
         # self.time_input = tk.Entry(self.__inner_frame, font=f)
 
         # current_time = tk.StringVar()
@@ -82,8 +88,10 @@ class ManageApptFrame(tk.Toplevel):
                                   relief=tk.SOLID,
                                   cursor='hand2',
                                   command=self.__delete_appointment)
-
-        #self.show_id.grid(row=0, column=1, pady=10, padx=20)
+        '''
+        self.show_id.grid(row=0, column=1, pady=10, padx=20)
+        Trying to get appointmentID to display correctly
+        '''
         self.date_input.grid(row=1, column=1, pady=10, padx=20)
         self.time_input.grid(row=2, column=1, pady=10, padx=20)
         self.masseuse_input.grid(row=3, column=1, pady=10, padx=20)
