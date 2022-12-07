@@ -21,21 +21,29 @@ class ManageApptFrame(tk.Toplevel):
         self.__inner_frame = tk.Frame(self, bd=2, bg='#CCCCCC', relief=tk.SOLID, padx=10, pady=10)
 
         tk.Label(self.__inner_frame,
-                 text="Date",
+                 text="Appointment ID",
                  bg='#CCCCCC',
-                 font=f).grid(row=0, column=0, sticky=tk.W, pady=10)
+                 font=f).grid(row=0, column=0, pady=10)
+
         tk.Label(self.__inner_frame,
-                 text="Time",
+                 text="Date",
                  bg='#CCCCCC',
                  font=f).grid(row=1, column=0, pady=10)
         tk.Label(self.__inner_frame,
-                 text="Masseuse",
+                 text="Time",
                  bg='#CCCCCC',
                  font=f).grid(row=2, column=0, pady=10)
         tk.Label(self.__inner_frame,
-                 text="Customer",
+                 text="Masseuse",
                  bg='#CCCCCC',
                  font=f).grid(row=3, column=0, pady=10)
+        tk.Label(self.__inner_frame,
+                 text="Customer",
+                 bg='#CCCCCC',
+                 font=f).grid(row=4, column=0, pady=10)
+
+        # Get appointmentID if available
+
 
         # Input values
         self.__date_var = tk.StringVar()
@@ -67,12 +75,21 @@ class ManageApptFrame(tk.Toplevel):
                                 cursor='hand2',
                                 command=self.__save_appointment)
 
-        self.date_input.grid(row=0, column=1, pady=10, padx=20)
-        self.time_input.grid(row=1, column=1, pady=10, padx=20)
-        self.masseuse_input.grid(row=2, column=1, pady=10, padx=20)
-        self.customer_input.grid(row=3, column=1, pady=10, padx=20)
-        save_button.grid(row=4, column=1, pady=10, padx=20)
+        delete_button = tk.Button(self.__inner_frame,
+                                  width=15,
+                                  text='Delete',
+                                  font=f,
+                                  relief=tk.SOLID,
+                                  cursor='hand2',
+                                  command=self.__delete_appointment)
 
+        #self.show_id.grid(row=0, column=1, pady=10, padx=20)
+        self.date_input.grid(row=1, column=1, pady=10, padx=20)
+        self.time_input.grid(row=2, column=1, pady=10, padx=20)
+        self.masseuse_input.grid(row=3, column=1, pady=10, padx=20)
+        self.customer_input.grid(row=4, column=1, pady=10, padx=20)
+        save_button.grid(row=5, column=0, pady=10, padx=15)
+        delete_button.grid(row=5, column=1, pady=10, padx=15)
         # self.date_input.bind("<<CalendarSelected>>", lambda: print(self.date_input.selection_get()))
 
         self.__inner_frame.pack()
@@ -86,9 +103,14 @@ class ManageApptFrame(tk.Toplevel):
     def __save_appointment(self):
         print(self.__date_var.get(), self.__time_var.get(), self.__masseuse_var.get())
         time1 = datetime.strptime(self.__time_var.get(), '%I:%M %p').strftime('%H')
-        dt = datetime.strptime(self.__date_var.get(),'%m/%d/%y') + timedelta(hours = int(time1))
+        dt = datetime.strptime(self.__date_var.get(), '%m/%d/%y') + timedelta(hours=int(time1))
         appointmentManager.insert_appointment(f'{dt}', 1, 'BOOKED', 61789, 10325)
         self.main_frame.make_appointment_scheduler()
+
+    def __delete_appointment(self):
+        appointmentManager.delete_appointment(898)
+        self.main_frame.make_appointment_scheduler()
+
 
     def my_callback(self, var, index, mode):
         print("Traced variable {}".format(self.__date_var.get()))
