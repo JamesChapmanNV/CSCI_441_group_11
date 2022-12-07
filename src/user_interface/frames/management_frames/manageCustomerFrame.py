@@ -1,20 +1,20 @@
 import tkinter as tk
 
 import customerManager
-from src.user_interface.utils import Appointments
+from src.user_interface.utils import appointments
 from src import appointmentManager
 from src import masseuseManager
 from datetime import datetime, timedelta
 
 
-class ManageApptFrame(tk.Toplevel):
+class ManageCustomerFrame(tk.Toplevel):
     def __init__(self, container, main_frame):
         super().__init__()
         self.container = container
         self.main_frame = main_frame
 
         self.__show_inner_frame()
-        self.wm_title("Manage Appointment")
+        self.wm_title("Manage Customer")
 
     def __show_inner_frame(self):
         f = ('Times', 14)
@@ -46,13 +46,7 @@ class ManageApptFrame(tk.Toplevel):
         # Set callback
         self.__date_var.trace_add('write', callback=self.my_callback)
 
-        # self.date_input = tk.Entry(self.__inner_frame, textvariable=self.__date_var, font=f)
-        self.date_input = Appointments.Appointments(self.__inner_frame, self.__date_var)
-
-        # self.time_input = tk.Entry(self.__inner_frame, font=f)
-
-        # current_time = tk.StringVar()
-        # self.time_input = tk.OptionMenu(self.__inner_frame, self.__time_var, *self.get_times())
+        self.date_input = appointments.Appointments(self.__inner_frame, self.__date_var)
 
         masseuse_choices = masseuseManager.get_all_masseuse_names()
         self.masseuse_input = tk.OptionMenu(self.__inner_frame, self.__masseuse_var, *masseuse_choices)
@@ -73,8 +67,6 @@ class ManageApptFrame(tk.Toplevel):
         self.customer_input.grid(row=3, column=1, pady=10, padx=20)
         save_button.grid(row=4, column=1, pady=10, padx=20)
 
-        # self.date_input.bind("<<CalendarSelected>>", lambda: print(self.date_input.selection_get()))
-
         self.__inner_frame.pack()
 
     def update_appointment(self, date, time, masseuse, customer):
@@ -94,14 +86,11 @@ class ManageApptFrame(tk.Toplevel):
         print("Traced variable {}".format(self.__date_var.get()))
         self.time_input = tk.OptionMenu(self.__inner_frame, self.__time_var, *self.get_times())
 
-        '''if self.__date_var.get() != "10/30/22":
-            self.__time_var.set("Test")'''
-
     def get_times(self):
         seletedDate = self.__date_var.get()
-        if (seletedDate == '11/6/22'):
+        if seletedDate == '11/6/22':
             return [1, 2, 3]
-        if (seletedDate == ''):
+        if seletedDate == '':
             return [
                 '9:00 AM',
                 '10:00 AM',
@@ -135,7 +124,7 @@ class ManageApptFrame(tk.Toplevel):
         # count number of appointments at that time scheduled
         # because there are 3 rooms, if <3, there is an appointment available
         for time in times_dict:
-            if (times_dict[time] < 3):
+            if times_dict[time] < 3:
                 times.append(time)
 
         print(times)

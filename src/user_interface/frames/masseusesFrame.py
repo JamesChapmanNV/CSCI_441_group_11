@@ -1,5 +1,4 @@
 import tkinter as tk
-import tkinter.ttk as ttk
 import tkinter.font as tkfont
 from datetime import datetime
 
@@ -7,9 +6,8 @@ from src.user_interface.utils.tree import Tree
 from src import appointmentManager
 from src import masseuseManager
 from src import customerManager
-from user_interface.frames.management_frames.manageAppointmentFrame import ManageApptFrame
-from user_interface.frames.customersFrame import CustomersFrame
-from user_interface.frames.masseusesFrame import MasseusesFrame
+from user_interface.frames.management_frames.manageMasseuseFrame import ManageMasseuseFrame
+from user_interface.utils.frameUtils import set_ui_properties
 
 # Frame background color
 color_dark_gray = "gray17"
@@ -19,7 +17,7 @@ color_light_blue = "#099FFF"
 btn_strings = ["Appointments", "Customers", "Masseuses", "Admin"]
 
 
-class MainFrame(ttk.Frame):
+class MasseusesFrame(tk.Toplevel):
     def __init__(self, container):
         super().__init__(container)
         self.container = container
@@ -27,10 +25,13 @@ class MainFrame(ttk.Frame):
         self.grid_columnconfigure(0, weight=1)
 
         self.button_panel_hidden = False
-        self.__show_buttons()
+        if not self.button_panel_hidden:
+            self.__show_buttons()
 
         # Show appointments by default on UI construct
         self.__show_appointment_container()
+
+        set_ui_properties(self, width=900, height=600, is_resizable=True)
 
     def __show_buttons(self):
 
@@ -44,12 +45,6 @@ class MainFrame(ttk.Frame):
         btn_container.grid(row=0, column=0, padx=20, pady=100)
 
         for inx, img in enumerate(btn_strings):
-            command = None
-            if btn_strings[inx] == "Customers":
-                command = self.__show_customers_frame
-            elif btn_strings[inx] == "Masseuses":
-                command = self.__show_masseuses_frame
-
             btn = tk.Button(btn_container,
                             text=btn_strings[inx],
                             font="BahnschriftLight 15 bold",
@@ -57,8 +52,7 @@ class MainFrame(ttk.Frame):
                             bg=color_dark_gray,
                             fg=color_light_blue,
                             activebackground=color_dark_gray,
-                            activeforeground="white",
-                            command=command)
+                            activeforeground="white")
 
             btn.grid_columnconfigure(1, weight=1)
             btn.grid_rowconfigure(inx, weight=1)
@@ -70,7 +64,7 @@ class MainFrame(ttk.Frame):
         action_btn_container = tk.Frame(master=self.__btn_panel, bg=color_dark_gray)
         action_btn_container.grid(row=1, column=0, padx=20, pady=20)
         add_appt = tk.Button(action_btn_container,
-                             text="Add Appointment",
+                             text="Add Masseuse",
                              font="BahnschriftLight 15 bold",
                              borderwidth=0,
                              bg=color_dark_gray,
@@ -84,13 +78,7 @@ class MainFrame(ttk.Frame):
         add_appt.grid(row=0, column=1, padx=15, pady=15, sticky=tk.W)
 
     def __show_manage_appt_frame(self):
-        ManageApptFrame(container=self.container, main_frame=self)
-
-    def __show_customers_frame(self):
-        CustomersFrame(container=self.container)
-
-    def __show_masseuses_frame(self):
-        MasseusesFrame(container=self.container)
+        ManageMasseuseFrame(container=self.container, main_frame=self)
 
     def __show_appointment_container(self):
 
@@ -169,7 +157,7 @@ class MainFrame(ttk.Frame):
 
     def __on_tree_double_click(self, event):
         selected_values = list(self.tree_view.item(self.tree_view.selection()[0]).values())[2]
-        update_appt_frame = ManageApptFrame(container=self.container, main_frame=self)
+        update_appt_frame = ManageMasseuseFrame(container=self.container, main_frame=self)
         update_appt_frame.update_appointment(date=datetime.strptime(selected_values[1], '%Y-%m-%d').strftime('%m/%d/%y'),
                                              time=selected_values[2],
                                              masseuse=selected_values[4],
