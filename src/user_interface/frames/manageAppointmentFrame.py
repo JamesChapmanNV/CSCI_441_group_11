@@ -44,6 +44,10 @@ class ManageApptFrame(tk.Toplevel):
                  text="Customer",
                  bg='#CCCCCC',
                  font=f).grid(row=4, column=0, pady=10)
+        tk.Label(self.__inner_frame,
+                 text="Room #",
+                 bg='#CCCCCC',
+                 font=f).grid(row=5, column=0, pady=10)
 
         # Get appointmentID if available
 
@@ -63,6 +67,11 @@ class ManageApptFrame(tk.Toplevel):
         self.show_id = tk.StringVar(self, value="123")
         This is probably not necessary. Trying to figure out how to update appointmentID correctly.
         '''
+
+        rooms = ["1", "2", "3", "4", ]
+        room_select = tk.StringVar()
+        room_select.set(rooms[0])
+
         # self.time_input = tk.Entry(self.__inner_frame, font=f)
 
         # current_time = tk.StringVar()
@@ -73,6 +82,7 @@ class ManageApptFrame(tk.Toplevel):
 
         customer_choices = customerManager.get_all_customer_names()
         self.customer_input = tk.OptionMenu(self.__inner_frame, self.__customer_var, *customer_choices)
+        self.room_num = tk.OptionMenu(self.__inner_frame, room_select, *rooms)
         save_button = tk.Button(self.__inner_frame,
                                 width=15,
                                 text='Save',
@@ -96,8 +106,9 @@ class ManageApptFrame(tk.Toplevel):
         self.time_input.grid(row=2, column=1, pady=10, padx=20)
         self.masseuse_input.grid(row=3, column=1, pady=10, padx=20)
         self.customer_input.grid(row=4, column=1, pady=10, padx=20)
-        save_button.grid(row=5, column=0, pady=10, padx=15)
-        delete_button.grid(row=5, column=1, pady=10, padx=15)
+        self.room_num.grid(row=5, column=1, pady=10, padx=20)
+        save_button.grid(row=6, column=0, pady=10, padx=15)
+        delete_button.grid(row=6, column=1, pady=10, padx=15)
         # self.date_input.bind("<<CalendarSelected>>", lambda: print(self.date_input.selection_get()))
 
         self.__inner_frame.pack()
@@ -116,7 +127,7 @@ class ManageApptFrame(tk.Toplevel):
         self.main_frame.make_appointment_scheduler()
 
     def __delete_appointment(self):
-        appointmentManager.delete_appointment(898)
+        appointmentManager.delete_appointment(902)
         self.main_frame.make_appointment_scheduler()
 
 
