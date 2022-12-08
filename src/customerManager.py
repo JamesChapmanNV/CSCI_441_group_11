@@ -19,6 +19,23 @@ def delete_customer(customerId):
         mysqlManager.connection.commit()  
     except:
         print('error in delete_customer')
+        
+def get_customer_ID(name):
+    try:
+        data = (str(name),)
+        command = ("Select customerId from customers "
+                   "where name = %s ")
+        mysqlManager.cursor.execute(command, data)
+
+        cid = mysqlManager.cursor.fetchone()
+
+    except:
+        print('error in get_customer_ID ')
+
+    if (cid[0]):
+        return cid[0]
+    return ''
+
 
 def get_customer_name(customerId): 
     try:
