@@ -115,7 +115,8 @@ class ManageApptFrame(tk.Toplevel):
 
         self.__inner_frame.pack()
 
-    def update_appointment(self, date, time, masseuse, customer):
+    def update_appointment(self, id, date, time, masseuse, customer):
+        self.__id_var = id
         self.__date_var.set(date)
         self.__time_var.set(time)
         self.__masseuse_var.set(masseuse)
@@ -129,7 +130,7 @@ class ManageApptFrame(tk.Toplevel):
         self.main_frame.make_appointment_scheduler()
 
     def __delete_appointment(self):
-        appointmentManager.delete_appointment(915)
+        appointmentManager.delete_appointment(self.__id_var)
         self.main_frame.make_appointment_scheduler()
 
     def my_callback(self, var, index, mode):

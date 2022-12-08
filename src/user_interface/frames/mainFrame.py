@@ -170,7 +170,9 @@ class MainFrame(ttk.Frame):
     def __on_tree_double_click(self, event):
         selected_values = list(self.tree_view.item(self.tree_view.selection()[0]).values())[2]
         update_appt_frame = ManageApptFrame(container=self.container, main_frame=self)
-        update_appt_frame.update_appointment(date=datetime.strptime(selected_values[1], '%Y-%m-%d').strftime('%m/%d/%y'),
+        update_appt_frame.update_appointment(id=selected_values[0],
+                                             date=datetime.strptime(selected_values[1],
+                                                                    '%Y-%m-%d').strftime('%m/%d/%y'),
                                              time=selected_values[2],
                                              masseuse=selected_values[4],
                                              customer=selected_values[5])
