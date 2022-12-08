@@ -33,6 +33,22 @@ def get_masseuse_name(masseuseId):
     #Access name string at index 0
     return name[0]
 
+def get_masseuse_ID(name):
+    try:
+        data = (str(name),)
+        command = ("Select masseuseId from masseuse "
+                   "where name = %s ")
+        mysqlManager.cursor.execute(command, data)
+
+        mid = mysqlManager.cursor.fetchone()
+
+    except:
+        print('error in get_masseuse_ID ')
+
+    if (mid[0]):
+        return mid[0]
+    return ''
+
 def get_all_masseuse_names(): 
     try:
         command = ("SELECT distinct name FROM masseuses")
