@@ -110,7 +110,9 @@ class ManageApptFrame(tk.Toplevel):
         print(self.__date_var.get(), self.__time_var.get(), self.__masseuse_var.get())
         time1 = datetime.strptime(self.__time_var.get(), '%I:%M %p').strftime('%H')
         dt = datetime.strptime(self.__date_var.get(), '%m/%d/%y') + timedelta(hours=int(time1))
-        appointmentManager.insert_appointment(f'{dt}', self.__room_select.get(), 'BOOKED', 61789, 10325)
+        appointmentManager.insert_appointment(f'{dt}', self.__room_select.get(), 'BOOKED',
+                                              masseuseManager.get_masseuse_ID(self.__masseuse_var.get()),
+                                              customerManager.get_customer_ID(self.__customer_var.get()))
         self.main_frame.make_appointment_scheduler()
 
     def __delete_appointment(self):
