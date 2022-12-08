@@ -36,7 +36,7 @@ def get_masseuse_name(masseuseId):
 def get_masseuse_ID(name):
     try:
         data = (str(name),)
-        command = ("Select masseuseId from masseuse "
+        command = ("Select masseuseId from masseuses "
                    "where name = %s ")
         mysqlManager.cursor.execute(command, data)
 
