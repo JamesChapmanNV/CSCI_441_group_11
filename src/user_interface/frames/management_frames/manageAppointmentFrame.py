@@ -1,6 +1,6 @@
 import tkinter as tk
 
-import customerManager
+from src import customerManager
 from src.user_interface.utils import appointments
 from src import appointmentManager
 from src import masseuseManager

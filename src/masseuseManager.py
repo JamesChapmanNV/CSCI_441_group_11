@@ -61,3 +61,23 @@ def get_all_masseuse_names():
         names.append(masseuse[0])
 
     return names
+
+def get_masseuses():
+    try:
+        command = ("Select masseuseId, name, address, email, phone "
+                   "from masseuses ")
+        mysqlManager.cursor.execute(command)
+
+    except:
+        print('error in get_masseuses Select')
+
+    masseuses = []
+    try:
+        for masseuseId, name, address, email, phone in mysqlManager.cursor:
+            # Creates an array within appointments array
+            # one for each appointment/timeslot
+            masseuses.append([masseuseId, name, address, email, phone])
+    except:
+        print('error in get_masseuses append')
+
+    return masseuses

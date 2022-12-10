@@ -6,7 +6,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 
 from src.user_interface.frames.loginFrame import LoginFrame
 from src.user_interface.frames.mainFrame import MainFrame
-from user_interface.frames.management_frames.manageAppointmentFrame import ManageApptFrame
+from src.user_interface.frames.management_frames.manageAppointmentFrame import ManageApptFrame
 from src.user_interface.utils.frameUtils import set_ui_properties
 
 frames_classes = (MainFrame, LoginFrame)
@@ -33,7 +33,7 @@ class UserInterface(tk.Tk):
         frame = self.frames[frame_name_str]
         frame.grid(row=0, column=0, sticky="nsew")
 
-        if frame_name_str != "LoginFrame":
+        if frame_name_str != "":
             self.__popup = tk.Menu(self, tearoff=0)
             self.__popup.add_command(label="Add Appointment", command=self.show_manage_appt_frame)
 

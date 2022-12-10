@@ -62,7 +62,7 @@ def get_future_booked_appointments():
     try:
         data = (str(curHour),)
         command = ("Select appointmentId, start_time, room, status, masseuseId, customerId "
-                   "from appointments where ( start_time >= %s )")
+                   "from appointments where ( start_time >= %s ) ORDER BY start_time")
         mysqlManager.cursor.execute(command, data)
     except:
         print('error in get_appointments Select')

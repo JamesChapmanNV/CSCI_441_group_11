@@ -64,3 +64,23 @@ def get_all_customer_names():
         names.append(customers[0])
 
     return names
+
+def get_customers():
+    try:
+        command = ("Select customerId, name, address, email, phone "
+                   "from customers ")
+        mysqlManager.cursor.execute(command)
+
+    except:
+        print('error in get_customers Select')
+
+    customers = []
+    try:
+        for customerId, name, address, email, phone in mysqlManager.cursor:
+            # Creates an array within appointments array
+            # one for each appointment/timeslot
+            customers.append([customerId, name, address, email, phone])
+    except:
+        print('error in get_customers append')
+
+    return customers

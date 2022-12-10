@@ -6,8 +6,8 @@ from src.user_interface.utils.tree import Tree
 from src import appointmentManager
 from src import masseuseManager
 from src import customerManager
-from user_interface.frames.management_frames.manageMasseuseFrame import ManageMasseuseFrame
-from user_interface.utils.frameUtils import set_ui_properties
+from src.user_interface.frames.management_frames.manageMasseuseFrame import ManageMasseuseFrame
+from src.user_interface.utils.frameUtils import set_ui_properties
 
 # Frame background color
 color_dark_gray = "gray17"
@@ -113,7 +113,7 @@ class MasseusesFrame(tk.Toplevel):
         self.make_appointment_scheduler()
 
     def make_appointment_scheduler(self):
-        columns = ('appt_num', 'date', 'time', 'room_num', "assigned_to", "customer")
+        columns = ('masseuseId', 'name', 'address', 'email', "phone")
         self.tree_view = Tree(master=self.__sched_container, columns=columns)
 
         for column in columns:
@@ -127,18 +127,17 @@ class MasseusesFrame(tk.Toplevel):
                                   anchor="w")
 
         tree_entries = []
-        appointments = appointmentManager.get_future_booked_appointments()
+        masseuses = masseuseManager.get_masseuses()
+        # appointments = appointmentManager.get_future_booked_appointments()
         # return to an array of all booked appointments
         # each appointment includes [appointmentId, start_time, room, status, masseuseId, customerId]
-        for appointment in appointments:
-            appt_num = appointment[0]
-            dt = appointment[1]
-            date = dt.strftime('%Y-%m-%d')
-            time = dt.strftime('%H:%M')
-            room_num = appointment[2]
-            assigned_to = masseuseManager.get_masseuse_name(appointment[4])
-            customer = customerManager.get_customer_name(appointment[5])
-            entry = (f'{appt_num}', f'{date}', f'{time}', f'{room_num}', f'{assigned_to}', f'{customer}')
+        for masseuse in masseuses:
+            masseuseId = masseuse[0]
+            name = masseuse[1]
+            address = masseuse[2]
+            email = masseuse[3]
+            phone = masseuse[4]
+            entry = (f'{masseuseId}', f'{name}', f'{address}', f'{email}', f'{phone}')
             tree_entries.append(entry)
 
         for tree_index, tree_entry in enumerate(tree_entries):
