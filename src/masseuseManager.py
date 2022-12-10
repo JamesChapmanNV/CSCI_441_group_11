@@ -33,6 +33,26 @@ def get_masseuse_name(masseuseId):
     #Access name string at index 0
     return name[0]
 
+def get_masseuses():
+    try:
+        command = ("Select masseuseId, name, address, email, phone "
+                   "from masseuses ")
+        mysqlManager.cursor.execute(command)
+
+    except:
+        print('error in get_masseuses Select')
+
+    masseuses = []
+    try:
+        for masseuseId, name, address, email, phone in mysqlManager.cursor:
+            # Creates an array within appointments array
+            # one for each appointment/timeslot
+            masseuses.append([masseuseId, name, address, email, phone])
+    except:
+        print('error in get_masseuses append')
+
+    return masseuses
+
 def get_masseuse_ID(name):
     try:
         data = (str(name),)
