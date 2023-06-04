@@ -1,5 +1,4 @@
 # CSCI_441_group_11
-Scheduling application using TKinter  & Amazon AWS-RDS
 
 1. Customer Statement of Requirements 
 2. System Requirements 
@@ -12,3 +11,5 @@ Scheduling application using TKinter  & Amazon AWS-RDS
 9. Algorithms and Data Structures 
 10. User Interface Design and Implementation 
 11. Design of Tests 
+
+Class based on (https://www.ece.rutgers.edu/~marsic/Teaching/SE/index.html)
